@@ -5,9 +5,13 @@ block content
     h2 Welcome, sign up here!
     form(action='' method='POST')
         label(for='username') Username:
-        input(type='text' placeholder='Username' minLength=1 required)
+        input(type='text' name='username' placeholder='Username' minLength=1 required)
         label(for='password') Password: 
-        input(type='password' required)
-        label(for='Confirm password') Password: 
-        input(type='password' required)
+        input(type='password' name='password' required)
+        label(for='passwordConfirmation') Confirm Password: 
+        input(type='password' name ='passwordConfirmation' required)
+        label(for='secret') Secret Code:
+        input(type='text' name='secret' placeholder='secret code' required)
         button(type='submit') Login
+    if errors 
+        span=errors

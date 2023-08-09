@@ -4,10 +4,11 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 
 const index = require('./routes/index');
+const User = require('./models/User');
 
 mongoose.connect(process.env.MONGO_URI, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
@@ -60,13 +61,5 @@ app.use(function(req, res, next) {
 });
 
 app.use("/", index);
-
-app.use((req, res, next) => {
-    next(createError(404));
-})
-
-app.use((err, req, res, next) => {
-    res.send(err)
-})
 
 app.listen(3000, ()=>console.log('listening on port 3000!'));

@@ -8,11 +8,11 @@ html(lang="en")
         header
             h1 OpenSecrets
             nav 
-            if currentUser
-                button Login
-                button Signup
+            if !currentUser
+                a(href='/login') Login
+                a(href='/signup') Signup
             else 
-                button Logout 
+                a(href='/logout') Logout
         block content
         footer 
             p lunstia &copy; 2023
