@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h2 Welcome back! Login here
+    form(action='' method='POST')
+        label(for='username') Username:
+        input(type='text' placeholder='Username' required)
+        label(for='password') Password: 
+        input(type='password' required)
+        button(type='submit') Login

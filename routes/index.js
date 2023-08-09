@@ -6,11 +6,19 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/login', (req, res, next) => {
-    res.send('LOGIN NOT IMPLEMENTED');
+    if (res.locals.currentUser) {
+        res.redirect('/');
+        return
+    }
+    res.render('log-in')
 })
 
 router.get('/signup', (req, res, next) => {
-    res.send('SIGNUP NOT IMPLEMENTED');
+    if (res.locals.currentUser) {
+        res.redirect('/');
+        return
+    }
+    res.render('sign-up');
 })
 
 module.exports = router;
