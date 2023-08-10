@@ -27,10 +27,10 @@ block content
     hr
     if currentUser
         form(action='/chat' method='POST')
-            textarea(name="post" placeholder="What's on your mind?" required)
+            textarea(name="post" id='post' placeholder="What's on your mind?" required)
             br
             label(for='hideAuthor') hide author:
-            input(type='checkbox' name='hideAuthor' checked)
+            input(type='checkbox' id='hideAuthor' name='hideAuthor' checked)
             label(for='hidePost') hide post:
-            input(type='checkbox' name='hidePost')
+            input(type='checkbox' id='hidePost' name='hidePost')
             button(type='submit') Post
