@@ -69,6 +69,15 @@ app.use(function(req, res, next) {
 
 app.use("/", index);
 
+app.use((req, res, next) => {
+    next(createError(404));
+});
+
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.render('error', {error: err})
+})
+
 socketConnection(server);
 server.listen(3000);
 
