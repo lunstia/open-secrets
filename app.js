@@ -5,7 +5,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const {socketConnection} = require('./utils/socket-io');
 const path = require('path');
+
+const http = require('http');
 
 const index = require('./routes/index');
 const User = require('./models/User');
@@ -15,6 +18,10 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
 const app = express()
+
+const server = http.createServer(app);
+
+
 
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'pug');
@@ -62,4 +69,10 @@ app.use(function(req, res, next) {
 
 app.use("/", index);
 
-app.listen(3000, ()=>console.log('listening on port 3000!'));
+socketConnection(server);
+server.listen(3000);
+
+//const server = app.listen(3000, ()=>console.log('listening on port 3000!'));
+
+
+

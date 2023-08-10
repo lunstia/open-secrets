@@ -2,9 +2,7 @@ const express = require('express');
 const index = require('../controllers/index');
 const router = express.Router()
 
-router.get('/', (req, res, next) => {
-    res.render('index')
-})
+router.get('/', index.chat_get);
 
 router.get('/login', (req, res, next) => {
     if (res.locals.currentUser) {
@@ -34,5 +32,12 @@ router.post('/signup', index.signup_post);
 
 router.get('/logout', index.logout_get);
 
+router.post('/chat', index.chat_post);
+
+router.post('/delete', index.chat_delete);
+
+router.get('/admin', index.admin_get);
+
+router.post('/admin', index.admin_post);
 
 module.exports = router;

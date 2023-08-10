@@ -3,6 +3,9 @@ const {body, validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const User = require('../models/User');
+const Post = require('../models/Post');
+const {emit} = require('../utils/socket-io');
+const { isObjectIdOrHexString } = require('mongoose');
 
 exports.signup_post = [
     body('secret', 'Secret is invalid').trim().custom(value => {
@@ -47,4 +50,71 @@ exports.logout_get = (req, res, next) => {
       }
       res.redirect("/");
     });
-  };
+};
+
+exports.chat_get = asyncHandler( async (req, res, next) => {
+    const posts = await Post.find().sort({date: 1}).limit(50).populate('user', 'username admin').exec()
+    res.render('index', {posts: posts})
+})
+
+exports.chat_post = [
+    body("post").trim().isLength({min: 1, max: 1000}).escape(),
+    body("hideAuthor").escape(),
+    body("hidePost").escape(),
+    asyncHandler( async (req, res, next) => {
+        if (!res.locals.currentUser) {
+            res.redirect('/login');
+            return
+        }
+
+        const hasHideAuthor = req.body.hideAuthor === 'on' ? true : false
+        const hasHidePost = req.body.hidePost === 'on' ? true : false
+
+        const post = new Post({
+            user: res.locals.currentUser._id,
+            post: req.body.post,
+            hideAuthor: hasHideAuthor,
+            hidePost: hasHidePost
+        })
+
+        await post.save()
+
+        emit('chat message');
+
+        res.redirect('/');
+    })
+];
+
+exports.chat_delete = asyncHandler(async (req, res, next) => {
+    const currentUser = res.locals.currentUser
+    if (currentUser && currentUser.admin) {
+        await Post.findByIdAndDelete(req.body.id).exec()
+        emit('chat message');
+        return
+    }
+    res.send('INVALID PERMISSIONS')
+})
+
+exports.admin_get = asyncHandler(async (req, res, next) => {
+    const currentUser = res.locals.currentUser
+    if (currentUser && currentUser.admin) {
+        const users = await User.find().exec()
+
+        res.render('admin', {users: users});
+        return
+    }
+
+    res.redirect('/')
+})
+
+exports.admin_post = asyncHandler(async (req, res, next) => {
+    const currentUser = res.locals.currentUser
+    if (currentUser && currentUser.admin) {
+        const makeAdmin = req.body.makeAdmin === 'on' ? true : false
+        const user = await User.findByIdAndUpdate(req.body.user, {_id: req.body.user, admin: makeAdmin})
+        res.redirect('/');
+        return
+    }
+
+    res.send('INVALID PERMISSIONS')
+})

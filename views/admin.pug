@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Admin
+    body
+        form(action='' method='POST')
+            select(name='user')
+                each user in users 
+                    if user.username !== currentUser.username
+                        option(value=user._id)=user.username
+            label(for='makeAdmin') Admin?
+            input(type='checkbox' name='makeAdmin')
+            button(type='submit') Make Admin

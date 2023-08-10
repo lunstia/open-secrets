@@ -1,4 +1,36 @@
 extends layout 
 
+block code 
+    script(src="/socket.io/socket.io.js")
+    script(src="index.js" defer)
+
 block content 
-    h1 messages
+    section(class='messages')
+    if posts && posts.length > 0
+        each post in posts
+            div(class='post-card')
+                if currentUser || !post.hideAuthor
+                    p(class='author')=post.user.username + (post.user.admin === true ? ": ADMIN" : '')
+                else 
+                    p(class='author') Anonymous
+                if currentUser || !post.hidePost
+                    p(class='body')=post.post
+                else 
+                    p(class='body') This author has hidden their post to non-members, join to access!
+                p(class='date')=post.date
+                if currentUser && currentUser.admin 
+                    form(action='/delete' method='POST')
+                        input(type='hidden' name='id' value=post._id)
+                        button(type='submit') Delete Post
+    else 
+        p No posts, be the first one to post!
+    hr
+    if currentUser
+        form(action='/chat' method='POST')
+            textarea(name="post" placeholder="What's on your mind?" required)
+            br
+            label(for='hideAuthor') hide author:
+            input(type='checkbox' name='hideAuthor' checked)
+            label(for='hidePost') hide post:
+            input(type='checkbox' name='hidePost')
+            button(type='submit') Post
