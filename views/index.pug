@@ -16,7 +16,7 @@ block content
                 if currentUser || !post.hidePost
                     p(class='body')=post.post
                 else 
-                    p(class='body') This author has hidden their post to non-members, join to access!
+                    p(class='body') This user has hidden their post to non-members, join to access!
                 p(class='date')=post.date
                 if currentUser && currentUser.admin 
                     form(action='/delete' method='POST')

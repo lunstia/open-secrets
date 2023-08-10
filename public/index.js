@@ -4,8 +4,10 @@ socket.on('chat message', () => {
     location.href = '/'
 })
 
+// allows users to keep their posts without the force refresh affecting them.
+
 window.onbeforeunload = () => {
-    if (!document.getElementById('post')) return // since if post doesnt exist, the others cant
+    if (!document.getElementById('post')) return
 
     sessionStorage.setItem('post', document.getElementById('post').value)
     sessionStorage.setItem('hideAuthor', document.getElementById('hideAuthor').checked)
@@ -13,7 +15,7 @@ window.onbeforeunload = () => {
 }
 
 window.onload = () => {
-    if (!document.getElementById('post')) return // since if post doesnt exist, the others cant
+    if (!document.getElementById('post')) return
 
     document.getElementById('post').value = sessionStorage.getItem('post') || '' 
     document.getElementById('hideAuthor').checked = sessionStorage.getItem('hideAuthor') === 'true' ? true : false
