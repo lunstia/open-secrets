@@ -26,11 +26,11 @@ block content
         p No posts, be the first one to post!
     hr
     if currentUser
-        form(action='/chat' method='POST')
+        form(action='/chat' method='POST' id='post-form')
             textarea(name="post" id='post' placeholder="What's on your mind?" required)
             br
             label(for='hideAuthor') hide author:
             input(type='checkbox' id='hideAuthor' name='hideAuthor' checked)
             label(for='hidePost') hide post:
             input(type='checkbox' id='hidePost' name='hidePost')
-            button(type='submit') Post
+            button(type='button' onclick="let form = document.getElementById('post-form'); form.submit() form.reset() return false") Post
