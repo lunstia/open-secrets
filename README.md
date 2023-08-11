@@ -1,6 +1,6 @@
 # open-secrets
 
-Note, the design isnt fully finished yet! <br> <br>
+Note, the design isnt fully finished yet! <br>
 
 Open Secrets is a messaging board that only allows its members to post. The twist however, is that any outsider cannot see the post nor author of its post.
 Of course this can be changed by the poster with two options that are: Hide User and Hide Post.
