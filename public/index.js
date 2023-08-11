@@ -16,7 +16,9 @@ window.onbeforeunload = () => {
 
 window.onload = () => {
     if (!document.getElementById('post')) return
+    const main = document.querySelector('main')
 
+    main.scrollTo(0, main.scrollHeight);
     document.getElementById('post').value = sessionStorage.getItem('post') || '' 
     document.getElementById('hideAuthor').checked = sessionStorage.getItem('hideAuthor') === 'true' ? true : false
     document.getElementById('hidePost').checked = sessionStorage.getItem('hidePost') === 'true' ? true : false

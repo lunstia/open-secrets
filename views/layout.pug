@@ -9,14 +9,18 @@ html(lang="en")
         link(rel="stylesheet" type="text/css" href="style.css")
     body
         header
-            h1 OpenSecrets
-            nav 
-            if !currentUser
-                a(href='/login') Login
-                a(href='/signup') Signup
-            else 
-                a(href='/logout') Logout
-        block content
-        footer 
-            p lunstia &copy; 2023
+            div(class="container")
+                h1 OpenSecrets
+                nav 
+                    if !currentUser
+                        a(href='/login') Login
+                        a(href='/signup') Signup
+                    else 
+                        a(href='/logout') Logout
+        main
+            div(class="container")
+                block content
+        footer
+            div(class="container")
+                p lunstia &copy; 2023
             

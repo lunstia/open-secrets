@@ -58,12 +58,18 @@ exports.chat_get = asyncHandler( async (req, res, next) => {
 })
 
 exports.chat_post = [
-    body("post").trim().isLength({min: 1, max: 1000}).escape(),
+    body("post", "Post cannot be empty").trim().isLength({min: 1, max: 1000}).escape(),
     body("hideAuthor").escape(),
     body("hidePost").escape(),
     asyncHandler( async (req, res, next) => {
         if (!res.locals.currentUser) {
             res.redirect('/login');
+            return
+        }
+
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.send(result.errors[0].msg)
             return
         }
 
