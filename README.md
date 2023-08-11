@@ -7,8 +7,8 @@ Of course this can be changed by the poster with two options that are: Hide User
 On signup, you must enter a secret code which for now is hidden in the html file!
 
 ## What I used
-Languages: Javascript, HTML, CSS 
-Libraries: Express, Mongoose, PassportJS, Socket.IO, bcrypt
+Languages: Javascript, HTML, CSS\n
+Libraries: Express, Mongoose, PassportJS, Socket.IO, bcrypt\n
 Views: Pug
 
 ## Features
