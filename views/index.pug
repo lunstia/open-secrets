@@ -14,7 +14,7 @@ block content
                     else 
                         p(class='author') Anonymous
                     if currentUser || !post.hidePost
-                        p(class='body')=post.post
+                        p(class='body')!=post.post
                     else 
                         p(class='body') This user has hidden their post to non-members, join to access!
                     p(class='date')=post.date
